@@ -28,7 +28,11 @@ function Page() {
   }, [address])
 
   useEffect(() => {
-
+    // @ts-ignore
+    if (window?.Telegram?.WebApp) {
+      // @ts-ignore
+      console.log(window?.Telegram?.WebApp)
+    }
   }, [])
 
   const getJwt = async (signature: string) => {
@@ -57,7 +61,7 @@ function Page() {
             signMessageStatus === 'loading' ? 'Signing...' : 'Sign with wallet'
           }
         </button>
-        <button onClick={loginTelegram}
+        <button
           className={'bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50'}>
           Continue with telegram
         </button>
