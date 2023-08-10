@@ -27,19 +27,9 @@ function Page() {
     }
   }, [address])
 
-  const loginTelegram = () => {
-    // @ts-ignore
-    window?.Telegram.Login.auth({
-      bot_id: process.env.BOT_TOKEN || '',
-      request_access: 'write',
-      embed: 1
-    }, async (data: TelegramData) => {
-      if (!data) {
-        return
-      }
-      setUserData(data)
-    });
-  };
+  useEffect(() => {
+
+  }, [])
 
   const getJwt = async (signature: string) => {
     return '123'
