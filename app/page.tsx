@@ -2,13 +2,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 function Page() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        padding: 12,
-      }}
-    >
+    <div className={'flex p-4'}>
       <ConnectButton />
     </div>
   );
