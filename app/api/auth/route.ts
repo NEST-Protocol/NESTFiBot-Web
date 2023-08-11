@@ -1,6 +1,9 @@
+import {fetch} from "next/dist/compiled/@edge-runtime/primitives";
+import {add} from "@noble/hashes/_u64";
+
 export async function POST(request: Request) {
   // get data from request.body
-  const {code, jwt} = await request.json()
+  const {code, jwt, address} = await request.json()
   if (!code || !jwt) {
     return new Response('Error', {
       status: 400
@@ -22,16 +25,19 @@ export async function POST(request: Request) {
   }
 
   // update jwt in redis
-  const res = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/auth:${user.id}`, {
+  await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/auth:${user.id}`, {
     method: 'POST',
     headers: {
       "Authorization": `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
     },
-    body: jwt,
+    body: JSON.stringify({
+      address: address,
+      jwt: jwt,
+    }),
   })
-    .then(response => response.json())
+
   // return a response
-  return new Response(res, {
+  return new Response('Ok', {
     status: 200
   })
 }
