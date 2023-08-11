@@ -39,7 +39,7 @@ export async function POST(request: Request) {
   })
 
   // 调用telegram接口给用户发消息
-  await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+  await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
