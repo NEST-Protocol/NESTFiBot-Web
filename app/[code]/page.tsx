@@ -32,7 +32,7 @@ async function Page({params}: {
       <div className={'flex justify-between items-center'}>
         <ConnectButton/>
       </div>
-      <div className={'flex flex-col items-center justify-center py-40 gap-10'}>
+      <div className={'flex flex-col items-center justify-center py-20 gap-10'}>
         <div className={'bg-red-200 p-4 rounded text-xl w-full text-center font-bold'}>
           Telegram: @{user.username}
         </div>
