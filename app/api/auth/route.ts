@@ -1,5 +1,37 @@
 export async function POST(request: Request) {
-  return new Response('Hello', {
+  // get data from request.body
+  const {code, jwt} = await request.json()
+  if (!code || !jwt) {
+    return new Response('Error', {
+      status: 400
+    })
+  }
+  // query user from the code
+  const user = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/get/code:${code}`, {
+    headers: {
+      "Authorization": `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
+    },
+  })
+    .then(response => response.json())
+    .then((data: any) => JSON.parse(data.result))
+
+  if (!user) {
+    return new Response('Error', {
+      status: 400
+    })
+  }
+
+  // update jwt in redis
+  const res = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/auth:${user.id}`, {
+    method: 'POST',
+    headers: {
+      "Authorization": `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
+    },
+    body: jwt,
+  })
+    .then(response => response.json())
+  // return a response
+  return new Response(res, {
     status: 200
   })
 }

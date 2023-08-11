@@ -5,7 +5,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 function RootLayout({children}: { children: React.ReactNode }) {
   return (
     <html lang="en">
-    <body>
+    <body className={'flex justify-center'}>
     <Providers>{children}</Providers>
     </body>
     </html>
