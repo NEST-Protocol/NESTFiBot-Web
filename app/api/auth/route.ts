@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     },
     body: JSON.stringify({
       chat_id: user.id,
-      message_id,
+      message_id: message_id + 1,
       text: `Welcome to NESTFi, ${user.username}. 
 
 *Address*: ${address}`,
