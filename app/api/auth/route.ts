@@ -1,5 +1,4 @@
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives";
-import {add} from "@noble/hashes/_u64";
 
 export async function POST(request: Request) {
   // get data from request.body
