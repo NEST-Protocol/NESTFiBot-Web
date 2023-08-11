@@ -21,12 +21,6 @@ function Page() {
     message: 'https://nestfi.org',
   })
 
-  useEffect(() => {
-    if (!address && openConnectModal) {
-      openConnectModal()
-    }
-  }, [address])
-
   const loginTelegram = () => {
     // @ts-ignore
     window?.Telegram.Login.auth({
@@ -73,6 +67,11 @@ function Page() {
         </button>
         <div>
           {signMessageData}
+        </div>
+        <div>
+          {
+            JSON.stringify(userData)
+          }
         </div>
       </div>
     </div>
