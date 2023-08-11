@@ -30,7 +30,6 @@ export const Signature: FC<SignatureProps> = ({code}) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      address,
       code,
       jwt,
     })

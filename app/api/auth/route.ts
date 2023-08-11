@@ -29,10 +29,7 @@ export async function POST(request: Request) {
     headers: {
       "Authorization": `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
     },
-    body: JSON.stringify({
-      address: address,
-      jwt: jwt,
-    }),
+    body: jwt,
   })
 
   // return a response
