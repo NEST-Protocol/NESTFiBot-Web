@@ -2,8 +2,7 @@
 
 import {useAccount, useSignMessage} from "wagmi";
 import useSWRImmutable from "swr/immutable";
-import {FC, useEffect} from "react";
-import {useRouter} from "next/navigation";
+import {FC} from "react";
 
 type SignatureProps = {
   code: string
@@ -11,7 +10,6 @@ type SignatureProps = {
 
 export const Signature: FC<SignatureProps> = ({code}) => {
   const {address, status: accountStatus} = useAccount();
-  const router = useRouter()
   const {signMessage, status: signMessageStatus, data: signMessageData} = useSignMessage({
     message: 'https://nestfi.org',
   })

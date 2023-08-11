@@ -2,7 +2,7 @@ import {fetch} from "next/dist/compiled/@edge-runtime/primitives";
 
 export async function POST(request: Request) {
   // get data from request.body
-  const {code, jwt, address} = await request.json()
+  const {code, jwt} = await request.json()
   if (!code || !jwt) {
     return new Response('Error', {
       status: 400
@@ -27,6 +27,7 @@ export async function POST(request: Request) {
   const decode = jwt.split('.')[1]
   const decodeJson = JSON.parse(Buffer.from(decode, 'base64').toString())
   const exp = decodeJson.exp
+  const address = decodeJson.walletAddress
 
   // update jwt in redis
   await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/auth:${user.id}?exat=${exp}`, {
@@ -37,6 +38,21 @@ export async function POST(request: Request) {
     body: jwt,
   })
 
+  // 调用telegram接口给用户发消息
+  await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      chat_id: user.id,
+      text: `Welcome to NESTFi, ${user.username}. 
+
+*Address*:${address}
+*Expire*: ${new Date(exp * 1000).toLocaleString()}.`,
+      parse_mode: 'Markdown',
+    })
+  })
   // return a response
   return new Response('Ok', {
     status: 200
