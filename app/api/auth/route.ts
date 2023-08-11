@@ -49,7 +49,8 @@ export async function POST(request: Request) {
       message_id: message_id + 1,
       text: `Welcome to NESTFi, ${user.username}. 
 
-*Address*: ${address}`,
+*Address*: ${address}
+*Expire at*: ${new Date(exp * 1000).toLocaleString()}`,
       parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: []
