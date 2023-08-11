@@ -27,13 +27,19 @@ function Page() {
     }
   }, [address])
 
-  useEffect(() => {
+  const loginTelegram = () => {
     // @ts-ignore
-    if (window?.Telegram?.WebApp) {
-      // @ts-ignore
-      console.log(window?.Telegram?.WebApp)
-    }
-  }, [])
+    window?.Telegram.Login.auth({
+      bot_id: process.env.BOT_TOKEN || '',
+      request_access: 'write',
+      embed: 1
+    }, async (data: TelegramData) => {
+      if (!data) {
+        return
+      }
+      setUserData(data)
+    });
+  };
 
   const getJwt = async (signature: string) => {
     return '123'
@@ -50,7 +56,7 @@ function Page() {
           - 查看你的账户余额，持仓历史信息；<br/>
           - 管理你的持仓；<br/>
 
-         请确保您信任NESTFi Bot for Telegram。
+          请确保您信任NESTFi Bot for Telegram。
         </div>
         <button
           disabled={!address || signMessageStatus === 'loading'}
@@ -61,7 +67,7 @@ function Page() {
             signMessageStatus === 'loading' ? 'Signing...' : 'Sign with wallet'
           }
         </button>
-        <button
+        <button onClick={loginTelegram}
           className={'bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50'}>
           Continue with telegram
         </button>

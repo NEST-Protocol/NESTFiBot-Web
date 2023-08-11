@@ -6,7 +6,15 @@ import Script from "next/script";
 function RootLayout({children}: { children: React.ReactNode }) {
   return (
     <html lang="en">
-    <Script src={"https://telegram.org/js/telegram-web-app.js"}></Script>
+    <Script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-login="NESTFiBot" data-size="large"
+            data-onauth="onTelegramAuth(user)"></Script>
+    <Script id={'onTelegramAuth'}>
+      {
+        `  function onTelegramAuth(user) {
+    alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
+  }`
+      }
+    </Script>
     <body>
     <Providers>{children}</Providers>
     </body>
