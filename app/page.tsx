@@ -14,7 +14,6 @@ type TelegramData = {
 }
 
 function Page() {
-  const {openConnectModal} = useConnectModal();
   const [userData, setUserData] = useState<TelegramData | undefined>(undefined)
   const {address, status: accountStatus} = useAccount()
   const {signMessage, status: signMessageStatus, data: signMessageData} = useSignMessage({
