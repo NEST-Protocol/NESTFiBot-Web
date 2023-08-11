@@ -23,8 +23,13 @@ export async function POST(request: Request) {
     })
   }
 
+  // decode jwt
+  const decode = jwt.split('.')[1]
+  const decodeJson = JSON.parse(Buffer.from(decode, 'base64').toString())
+  const exp = decodeJson.exp
+
   // update jwt in redis
-  await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/auth:${user.id}`, {
+  await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/auth:${user.id}?exat=${exp}`, {
     method: 'POST',
     headers: {
       "Authorization": `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
