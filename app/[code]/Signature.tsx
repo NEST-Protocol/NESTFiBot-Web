@@ -38,7 +38,7 @@ export const Signature: FC<SignatureProps> = ({code}) => {
 
   useEffect(() => {
     if (result?.status === 200) {
-      router.push('https://t.me/nestfibot')
+      router.push(`https://t.me/nestfibot?start=${address}`)
     }
   }, [result?.status])
 
