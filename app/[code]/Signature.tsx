@@ -36,7 +36,7 @@ export const Signature: FC<SignatureProps> = ({code}) => {
   if (result?.status === 200) {
     return (
       <div>
-        Success!
+        Success! You can close this tab.
       </div>
     )
   }
