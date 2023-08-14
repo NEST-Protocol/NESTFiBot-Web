@@ -17,7 +17,7 @@ async function Page({params}: {
     code: string
   }
 }) {
-  const user = await getData(params.code)
+  const {user} = await getData(params.code)
 
   if (!user) {
     return (
