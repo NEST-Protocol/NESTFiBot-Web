@@ -57,7 +57,7 @@ Unrealized PNL:  xxx NEST
       reply_markup: {
         inline_keyboard: [
           [{text: 'My Account', callback_data: 'my_account'}],
-          [{text: 'My Copy Trading', callback_data: 'my_copy_trading'}],
+          [{text: 'My Copy Trading', callback_data: 'my_copy_trading_0'}],
         ]
       }
     })
