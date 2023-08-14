@@ -56,8 +56,8 @@ Unrealized PNL:  xxx NEST
       parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
-          [{text: 'My Account', callback_data: 'my_account'}],
-          [{text: 'My Copy Trading', callback_data: 'my_copy_trading_0'}],
+          [{text: 'My Account', callback_data: 'cb_account'}],
+          [{text: 'My Copy Trading', callback_data: 'cb_kls_p_1'}],
         ]
       }
     })
