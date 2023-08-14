@@ -49,11 +49,16 @@ export async function POST(request: Request) {
       message_id: message_id + 1,
       text: `Welcome to NESTFi, ${user.username}. 
 
-*Address*: ${address}
-*Expire at*: ${new Date(exp * 1000).toLocaleString()}`,
+Copy trading assets: xxx NEST
+Profit:  xxx NEST
+Unrealized PNL:  xxx NEST
+*Address*: ${address}`,
       parse_mode: 'Markdown',
       reply_markup: {
-        inline_keyboard: []
+        inline_keyboard: [
+          [{text: 'My Account', callback_data: 'my_account'}],
+          [{text: 'My Copy Trading', callback_data: 'my_copy_trading'}],
+        ]
       }
     })
   })
