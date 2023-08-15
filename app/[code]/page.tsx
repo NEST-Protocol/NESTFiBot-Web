@@ -17,12 +17,12 @@ async function Page({params}: {
     code: string
   }
 }) {
-  const {user} = await getData(params.code)
+  const user = (await getData(params.code))?.user
 
   if (!user) {
     return (
       <div className={'px-4 py-2'}>
-        Sorry, something went wrong.
+        Sorry, the link is no longer valid.
       </div>
     )
   }
