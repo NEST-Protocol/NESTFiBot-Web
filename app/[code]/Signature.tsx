@@ -69,7 +69,7 @@ export const Signature: FC<SignatureProps> = ({code}) => {
                 </div>
               ) : (
                 (isJwtLoading || isResultLoading) ? (
-                  <div>
+                  <div className={'w-full text-center text-[#F9F9F9]'}>
                     loading
                   </div>
                 ) : (
