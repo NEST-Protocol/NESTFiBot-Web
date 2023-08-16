@@ -43,11 +43,11 @@ export async function POST(request: Request) {
     }
   }).then((res) => res.json())
   // @ts-ignore
-  const assets = data?.value?.assets || '-'
+  const assets = data?.value?.assets || 0
   // @ts-ignore
-  const unRealizedPnl = data?.value?.unRealizedPnl || '-'
+  const unRealizedPnl = data?.value?.unRealizedPnl || 0
   // @ts-ignore
-  const profit = data?.value?.profit || '-'
+  const profit = data?.value?.profit || 0
 
   // 调用telegram接口给用户发消息
   await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/editMessageText`, {
