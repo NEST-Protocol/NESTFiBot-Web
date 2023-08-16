@@ -38,12 +38,19 @@ async function Page({params}: {
           </span>
         </div>
         <div className={'px-[20px] py-[32px] w-full rounded-[12px] bg-[#1F2329] text-[#F9F9F9] mt-[20px]'}>
-          欢迎使用 NESTFi Bot for Telegram。
-          这将允许“NESTFi Bot for Telegram”:<br/>
-          - 查看你的账户余额，持仓历史信息；<br/>
-          - 管理你的持仓；<br/>
-
-          请确保您信任NESTFi Bot for Telegram。
+          <p>
+            Welcome to use NESTFi Bot for Telegram.
+          </p>
+          <br/>
+          <p className={'font-bold'}>
+            👩‍💻 This will allow the bot to view your name, account balance, position information.
+          </p>
+          <br/>
+          <p className={'text-sm'}>
+            👇 Please make sure you are using official NESTFi Copy Trading bot. <a href={'https://t.me/NESTFiBot'} className={'text-[#EAAA00]'}>
+            @NESTFiBot
+          </a>
+          </p>
         </div>
         <Signature code={params.code}/>
       </div>
