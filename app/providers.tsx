@@ -4,7 +4,7 @@ import * as React from 'react';
 import {
   RainbowKitProvider,
   getDefaultWallets,
-  connectorsForWallets,
+  connectorsForWallets, darkTheme,
 } from '@rainbow-me/rainbowkit';
 import {
   argentWallet,
@@ -13,13 +13,14 @@ import {
 } from '@rainbow-me/rainbowkit/wallets';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import {
+  bsc,
   mainnet,
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
-    mainnet,
+    mainnet, bsc
   ],
   [publicProvider()]
 );
@@ -27,7 +28,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 const projectId = '4ea5acecf1faa0887415ff933691f96f';
 
 const { wallets } = getDefaultWallets({
-  appName: 'RainbowKit demo',
+  appName: 'NESTFi Bot',
   projectId,
   chains,
 });
@@ -60,7 +61,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
   React.useEffect(() => setMounted(true), []);
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains} appInfo={demoAppInfo}>
+      <RainbowKitProvider chains={chains} appInfo={demoAppInfo} theme={darkTheme({
+        accentColor: '#EAAA00',
+        accentColorForeground: '#030308',
+        borderRadius: 'medium',
+        fontStack: 'system',
+        overlayBlur: 'small',
+      })}>
         {mounted && children}
       </RainbowKitProvider>
     </WagmiConfig>
