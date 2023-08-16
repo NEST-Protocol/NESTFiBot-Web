@@ -30,7 +30,7 @@ export async function POST(request: Request) {
   const address = decodeJson.walletAddress
 
   // update jwt in redis
-  await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/auth:${user.id}?exat=${exp}`, {
+  fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/auth:${user.id}?exat=${exp}`, {
     method: 'POST',
     headers: {
       "Authorization": `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
   })
 
   // 调用telegram接口给用户发消息
-  await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/editMessageText`, {
+  fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/editMessageText`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
