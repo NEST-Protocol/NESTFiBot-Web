@@ -30,7 +30,7 @@ export async function POST(request: Request) {
   const address = decodeJson.walletAddress
 
   // update jwt in redis
-  fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/auth:${user.id}?exat=${exp}`, {
+  await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/auth:${user.id}?exat=${exp}`, {
     method: 'POST',
     headers: {
       "Authorization": `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
