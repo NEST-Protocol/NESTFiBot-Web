@@ -119,7 +119,7 @@ export const Signature: FC<SignatureProps> = ({code}) => {
           ) : (
             (isJwtLoading || isResultLoading) ? (
               <div className={'w-full text-center text-sm text-[#F9F9F9]'}>
-                wait...
+                Please wait...
               </div>
             ) : (
               <button
@@ -128,7 +128,7 @@ export const Signature: FC<SignatureProps> = ({code}) => {
                 onClick={() => signMessage()}
               >
                 {
-                  signMessageStatus === 'loading' ? 'Signing...' : 'Sign with wallet'
+                  signMessageStatus === 'loading' ? 'Linking...' : 'Link Wallet'
                 }
               </button>
             )
