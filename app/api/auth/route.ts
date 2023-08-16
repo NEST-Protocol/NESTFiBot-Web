@@ -58,6 +58,7 @@ export async function POST(request: Request) {
         inline_keyboard: [
           [{text: 'My Account', callback_data: 'cb_account'}],
           [{text: 'My Copy Trading', callback_data: 'cb_kls_p_1'}],
+          [{text: 'View My Copy Trading', callback_data: 'cb_ps_*_1'}],
         ]
       }
     })
