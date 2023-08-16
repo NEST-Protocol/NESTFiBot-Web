@@ -80,7 +80,7 @@ export const Signature: FC<SignatureProps> = ({code}) => {
                     );
                   }
                   return (
-                    <div className={'w-full h-12 text-[#F9F9F9] text-sm bg-[#1F2329] flex items-center justify-center font-bold'}>
+                    <div className={'w-full h-12 text-[#F9F9F9] text-sm bg-[#1F2329] flex items-center justify-center font-bold rounded-[12px]'}>
                       <button onClick={openAccountModal} type="button">
                         <div className={'flex items-center gap-2'}>
                           <img alt={''} src={chain.iconUrl} width="20" height="20"/>
