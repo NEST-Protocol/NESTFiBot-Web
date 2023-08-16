@@ -47,11 +47,11 @@ export async function POST(request: Request) {
     body: JSON.stringify({
       chat_id: user.id,
       message_id: message_id + 1,
-      text: `Welcome to NESTFi, ${user.username}. 
+      text: `📊 My Trades
 
-Copy trading assets: xxx NEST
-Profit:  xxx NEST
-Unrealized PNL:  xxx NEST
+*Copy Trading Assets*: xxxNEST
+*Profit*: xxx NEST
+*Unrealized PNL*: xxx NEST
 *Address*: ${address}`,
       parse_mode: 'Markdown',
       reply_markup: {
