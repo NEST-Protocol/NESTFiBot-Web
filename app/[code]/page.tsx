@@ -47,7 +47,7 @@ async function Page({params}: {
           </p>
           <br/>
           <p className={'text-sm'}>
-            👇 Please make sure you are using official NESTFi Copy Trading bot. <a href={'https://t.me/NESTFiBot'} className={'text-[#EAAA00]'}>
+            👇 Please make sure you are using official NESTFi Copy Trading bot. <a href={'https://t.me/NESTFiBot'} target={'_blank'} className={'text-[#EAAA00]'}>
             @NESTFiBot
           </a>
           </p>
