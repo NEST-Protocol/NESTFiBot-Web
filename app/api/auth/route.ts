@@ -37,6 +37,17 @@ export async function POST(request: Request) {
     },
     body: jwt,
   })
+  const data = await fetch(`https://dev.nestfi.net/nestfi/copy/follower/position/info?chainId=97`, {
+    headers: {
+      'Authorization': jwt
+    }
+  }).then((res) => res.json())
+  // @ts-ignore
+  const assets = data?.value?.assets || '-'
+  // @ts-ignore
+  const unRealizedPnl = data?.value?.unRealizedPnl || '-'
+  // @ts-ignore
+  const profit = data?.value?.profit || '-'
 
   // 调用telegram接口给用户发消息
   await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/editMessageText`, {
@@ -49,9 +60,9 @@ export async function POST(request: Request) {
       message_id: message_id + 1,
       text: `📊 *My Trades*
 
-*Copy Trading Assets*: xxxNEST
-*Profit*: xxx NEST
-*Unrealized PNL*: xxx NEST
+*Copy Trading Assets*: ${assets} NEST
+*Profit*: ${profit} NEST
+*Unrealized PNL*: ${unRealizedPnl} NEST
 *Address*: ${address}`,
       parse_mode: 'Markdown',
       reply_markup: {
