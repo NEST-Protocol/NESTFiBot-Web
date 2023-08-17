@@ -68,7 +68,7 @@ Address: ${address}`,
       reply_markup: {
         inline_keyboard: [
           [{text: 'My Account', callback_data: 'cb_account'}],
-          [{text: 'My Copy Trading', callback_data: 'cb_kls_p_1'}],
+          [{text: 'My Traders', callback_data: 'cb_kls_p_1'}],
           [{text: 'My Copy Trading', callback_data: 'cb_ps_all_1'}],
         ]
       }
