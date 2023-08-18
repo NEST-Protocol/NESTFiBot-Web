@@ -38,16 +38,12 @@ async function Page({params}: {
           </span>
         </div>
         <div className={'px-[20px] py-[32px] w-full rounded-[12px] bg-[#1F2329] text-[#F9F9F9] mt-[20px]'}>
-          <p>
-            Welcome to use the NESTFi Copy Trading bot!
-          </p>
-          <br/>
           <p className={'font-bold'}>
-            This will allow the bot to view your name, account balance and position information.
+            It will allow the NESTFi Copy Trading bot view your address, account balance and position information.
           </p>
           <br/>
-          <p>
-            Please make sure you are using official NESTFi  Copy Trading bot.@NESTFi Bot. <a href={'https://t.me/NESTFiBot'} target={'_blank'} className={'text-[#EAAA00]'}>
+          <p className={'text-sm'}>
+            Please make sure your are using the official NESTFi Copy Trading bot. <a href={'https://t.me/NESTFiBot'} target={'_blank'} className={'text-[#EAAA00]'}>
             @NESTFiBot
           </a>
           </p>
