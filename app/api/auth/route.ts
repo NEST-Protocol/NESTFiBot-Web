@@ -57,7 +57,7 @@ export async function POST(request: Request) {
     },
     body: JSON.stringify({
       chat_id: user.id,
-      message_id: message_id + 1,
+      message_id: message_id,
       text: `📊 My Trades
 ————————————————————
 Copy Trading Assets: ${assets} NEST
