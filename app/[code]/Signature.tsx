@@ -114,7 +114,7 @@ export const Signature: FC<SignatureProps> = ({code}) => {
                   </clipPath>
                 </defs>
               </svg>
-              Success! You can close this tab.
+              Successfully Linked Wallet!
             </div>
           ) : (
             (isJwtLoading || isResultLoading) ? (
