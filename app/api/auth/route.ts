@@ -37,7 +37,7 @@ export async function POST(request: Request) {
     },
     body: jwt,
   })
-  const data = await fetch(`https://api.nestfi.net/nestfi/copy/follower/position/info?chainId=97`, {
+  const data = await fetch(`https://api.nestfi.net/nestfi/copy/follower/position/info?chainId=56`, {
     headers: {
       'Authorization': jwt
     }
