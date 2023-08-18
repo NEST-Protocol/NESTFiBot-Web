@@ -63,7 +63,7 @@ export async function POST(request: Request) {
 Copy Trading Assets: ${assets} NEST
 Profit: ${profit} NEST
 Unrealized PnL: ${unRealizedPnl} NEST
-Address: ${address}`,
+Address: \`${address}\``,
       parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
