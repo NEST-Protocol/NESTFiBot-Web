@@ -18,7 +18,7 @@ export const Signature: FC<SignatureProps> = ({code}) => {
   const {
     data: jwt,
     isLoading: isJwtLoading
-  } = useSWRImmutable((signMessageData && address) ? (`https://dev.nestfi.net/nestfi/op/user/login?chainId=56&remember=true&walletAddress=${address}`) : undefined, (url: any) => fetch(url, {
+  } = useSWRImmutable((signMessageData && address) ? (`https://api.nestfi.net/nestfi/op/user/login?chainId=56&remember=true&walletAddress=${address}`) : undefined, (url: any) => fetch(url, {
     method: "POST",
     headers: {
       signature: `${signMessageData}`
