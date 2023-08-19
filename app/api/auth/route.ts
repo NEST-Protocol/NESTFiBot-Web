@@ -60,7 +60,7 @@ export async function POST(request: Request) {
       message_id: message_id,
       text: `📊 My Trades
 ————————————————————
-Copy Trading Assets: ${assets} NEST
+Copy Trading Total Amount: ${assets} NEST
 Profit: ${profit} NEST
 Unrealized PnL: ${unRealizedPnl} NEST
 Address: \`${address}\``,
