@@ -1,4 +1,5 @@
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives";
+import {hostname} from "../../misc";
 
 export async function POST(request: Request) {
   // get data from request.body
@@ -37,7 +38,7 @@ export async function POST(request: Request) {
     },
     body: jwt,
   })
-  const data = await fetch(`https://api.nestfi.net/nestfi/copy/follower/position/info?chainId=56`, {
+  const data = await fetch(`${hostname}/nestfi/copy/follower/position/info?chainId=56`, {
     headers: {
       'Authorization': jwt
     }
