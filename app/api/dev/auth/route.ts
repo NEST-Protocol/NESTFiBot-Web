@@ -1,5 +1,6 @@
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives";
-import {hostname} from "../../misc";
+import {dev_hostname} from "../../../misc";
+import { Redis } from '@upstash/redis'
 
 export async function POST(request: Request) {
   // get data from request.body
@@ -9,14 +10,18 @@ export async function POST(request: Request) {
       status: 400
     })
   }
-  // query user from the codew
-  const {user, message_id} = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/get/code:${code}`, {
-    headers: {
-      "Authorization": `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
-    },
+  const redis = new Redis({
+    url: process.env.DEV_UPSTASH_REDIS_REST_URL!,
+    token: process.env.DEV_UPSTASH_REDIS_REST_TOKEN!,
   })
-    .then(response => response.json())
-    .then((data: any) => JSON.parse(data.result))
+  let userInfo = await redis.get(`code:${code}`)
+  if (!userInfo) {
+    return new Response('Error', {
+      status: 400
+    })
+  }
+  // @ts-ignore
+  const {user, message_id} = userInfo
 
   if (!user) {
     return new Response('Error', {
@@ -31,14 +36,9 @@ export async function POST(request: Request) {
   const address = decodeJson.walletAddress
 
   // update jwt in redis
-  await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/auth:${user.id}?exat=${exp}`, {
-    method: 'POST',
-    headers: {
-      "Authorization": `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
-    },
-    body: jwt,
-  })
-  const data = await fetch(`${hostname}/nestfi/copy/follower/position/info?chainId=56`, {
+  await redis.set(`auth:${user.id}`, jwt, {exat: exp})
+
+  const data = await fetch(`${dev_hostname}/nestfi/copy/follower/position/info?chainId=97`, {
     headers: {
       'Authorization': jwt
     }
@@ -50,8 +50,7 @@ export async function POST(request: Request) {
   // @ts-ignore
   const profit = data?.value?.profit || 0
 
-  // 调用telegram接口给用户发消息
-  await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/editMessageText`, {
+  await fetch(`https://api.telegram.org/bot${process.env.DEV_BOT_TOKEN}/editMessageText`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
