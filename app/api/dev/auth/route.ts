@@ -1,6 +1,6 @@
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives";
 import {dev_hostname} from "../../../misc";
-import { Redis } from '@upstash/redis'
+import { Redis } from '@upstash/redis';
 
 export async function POST(request: Request) {
   // get data from request.body
@@ -36,7 +36,10 @@ export async function POST(request: Request) {
   const address = decodeJson.walletAddress
 
   // update jwt in redis
-  await redis.set(`auth:${user.id}`, jwt, {exat: exp})
+  await redis.multi()
+    .set(`auth:${user.id}`, jwt, {exat: exp})
+    .set(`address:${address}`, user.id, {exat: exp})
+    .exec()
 
   const data = await fetch(`${dev_hostname}/nestfi/copy/follower/position/info?chainId=97`, {
     headers: {
