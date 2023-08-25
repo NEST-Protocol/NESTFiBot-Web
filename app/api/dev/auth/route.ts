@@ -1,6 +1,12 @@
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives";
 import {dev_hostname} from "../../../misc";
-import { Redis } from '@upstash/redis';
+import {Redis} from '@upstash/redis';
+
+const redis_url = process.env.DEV_UPSTASH_REDIS_REST_URL!
+const redis_token = process.env.DEV_UPSTASH_REDIS_REST_TOKEN!
+const api_hostname = dev_hostname
+const bot_token = process.env.DEV_BOT_TOKEN
+const chainId = 97
 
 export async function POST(request: Request) {
   // get data from request.body
@@ -11,8 +17,8 @@ export async function POST(request: Request) {
     })
   }
   const redis = new Redis({
-    url: process.env.DEV_UPSTASH_REDIS_REST_URL!,
-    token: process.env.DEV_UPSTASH_REDIS_REST_TOKEN!,
+    url: redis_url,
+    token: redis_token,
   })
   let userInfo = await redis.get(`code:${code}`)
   if (!userInfo) {
@@ -41,7 +47,7 @@ export async function POST(request: Request) {
     .set(`address:${address}`, user.id, {exat: exp})
     .exec()
 
-  const data = await fetch(`${dev_hostname}/nestfi/copy/follower/position/info?chainId=97`, {
+  const data = await fetch(`${api_hostname}/nestfi/copy/follower/position/info?chainId=${chainId}`, {
     headers: {
       'Authorization': jwt
     }
@@ -53,7 +59,7 @@ export async function POST(request: Request) {
   // @ts-ignore
   const profit = data?.value?.profit || 0
 
-  await fetch(`https://api.telegram.org/bot${process.env.DEV_BOT_TOKEN}/editMessageText`, {
+  await fetch(`https://api.telegram.org/bot${bot_token}/editMessageText`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

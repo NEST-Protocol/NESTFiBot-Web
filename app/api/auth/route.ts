@@ -1,5 +1,12 @@
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives";
 import {hostname} from "../../misc";
+import {Redis} from "@upstash/redis";
+
+const redis_url = process.env.UPSTASH_REDIS_REST_URL!
+const redis_token = process.env.UPSTASH_REDIS_REST_TOKEN!
+const api_hostname = hostname
+const bot_token = process.env.BOT_TOKEN
+const chainId = 56
 
 export async function POST(request: Request) {
   // get data from request.body
@@ -9,14 +16,18 @@ export async function POST(request: Request) {
       status: 400
     })
   }
-  // query user from the codew
-  const {user, message_id} = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/get/code:${code}`, {
-    headers: {
-      "Authorization": `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
-    },
+  const redis = new Redis({
+    url: redis_url,
+    token: redis_token,
   })
-    .then(response => response.json())
-    .then((data: any) => JSON.parse(data.result))
+  let userInfo = await redis.get(`code:${code}`)
+  if (!userInfo) {
+    return new Response('Error', {
+      status: 400
+    })
+  }
+  // @ts-ignore
+  const {user, message_id} = userInfo
 
   if (!user) {
     return new Response('Error', {
@@ -31,14 +42,12 @@ export async function POST(request: Request) {
   const address = decodeJson.walletAddress
 
   // update jwt in redis
-  await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/auth:${user.id}?exat=${exp}`, {
-    method: 'POST',
-    headers: {
-      "Authorization": `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
-    },
-    body: jwt,
-  })
-  const data = await fetch(`${hostname}/nestfi/copy/follower/position/info?chainId=56`, {
+  await redis.multi()
+    .set(`auth:${user.id}`, jwt, {exat: exp})
+    .set(`address:${address}`, user.id, {exat: exp})
+    .exec()
+
+  const data = await fetch(`${api_hostname}/nestfi/copy/follower/position/info?chainId=${chainId}`, {
     headers: {
       'Authorization': jwt
     }
@@ -50,8 +59,7 @@ export async function POST(request: Request) {
   // @ts-ignore
   const profit = data?.value?.profit || 0
 
-  // 调用telegram接口给用户发消息
-  await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/editMessageText`, {
+  await fetch(`https://api.telegram.org/bot${bot_token}/editMessageText`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
