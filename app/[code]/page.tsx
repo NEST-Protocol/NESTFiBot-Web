@@ -1,23 +1,19 @@
 import {Signature} from "./Signature";
+import {Redis} from "@upstash/redis";
 
-async function getData(code: string) {
-  return await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/get/code:${code}`, {
-      headers: {
-        "Authorization": `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
-      },
-      cache: 'no-cache',
-    })
-      .then(response => response.json())
-      .then((data: any) => JSON.parse(data.result))
-}
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+})
 
 async function Page({params}: {
   params: {
     code: string
   }
 }) {
-  const user = (await getData(params.code))?.user
-
+  const userInfo = await redis.get(`code:${params.code}`) as any
+  // @ts-ignore
+  const user = userInfo?.user
   if (!user) {
     return (
       <div className={'px-4 py-2 text-[#F9F9F9]'}>
