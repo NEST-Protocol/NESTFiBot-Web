@@ -25,7 +25,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [publicProvider()]
 );
 
-const projectId = '4ea5acecf1faa0887415ff933691f96f';
+const projectId = '91c4a65d26960c2d42b245b5bf92b17c';
 
 const { wallets } = getDefaultWallets({
   appName: 'NESTFi Bot',
